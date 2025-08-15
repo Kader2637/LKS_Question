@@ -1,358 +1,3449 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pertanyaan LKS 4 Bidang</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-    <!-- Start Screen -->
-    <div id="startScreen" class="bg-white border border-gray-200 rounded-lg shadow-sm p-8 max-w-md w-full text-gray-800 text-center">
-        <img src="https://smkn1kraksan.sch.id/wp-content/uploads/2023/05/Logo_SMK_Trans_1.png" alt="Logo SMK" class="mx-auto mb-6 h-24 w-auto">
-        <h1 class="text-3xl font-semibold mb-6 text-gray-800">LKS 4 BIDANG</h1>
-        <p class="text-gray-600 mb-6">Kompetensi Komputer dan Jaringan</p>
-        <button id="startBtn" class="bg-blue-600 text-white px-6 py-3 text-base font-medium rounded-md hover:bg-blue-700 transition-colors w-full shadow-md">
-            MULAI
-        </button>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seleksi Siswa Lomba SMK</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    <!-- Competition Selection Screen -->
-    <div id="competitionScreen" class="hidden bg-white border border-gray-200 rounded-lg shadow-sm p-8 max-w-md w-full">
-        <h2 class="text-xl font-semibold text-center mb-6 text-gray-800">PILIH KOMPETENSI</h2>
-        <div class="grid grid-cols-2 gap-4">
-            <button id="webDevBtn" class="bg-gray-50 text-gray-800 px-4 py-3 rounded-md hover:bg-gray-100 border border-gray-200 font-medium transition-colors">
-                WEB
-            </button>
-            <button id="itBtn" class="bg-white text-green-600 px-4 py-3 rounded-lg hover:bg-green-100 font-bold shadow transform hover:scale-105 transition">
-                IT
-            </button>
-            <button id="aiBtn" class="bg-white text-red-600 px-4 py-3 rounded-lg hover:bg-red-100 font-bold shadow transform hover:scale-105 transition">
-                AI
-            </button>
-            <button id="cyberSecBtn" class="bg-white text-purple-600 px-4 py-3 rounded-lg hover:bg-purple-100 font-bold shadow transform hover:scale-105 transition">
-                CYBER
-            </button>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-image: url("image/smkn.image.jpg");
+        background-repeat: no-repeat; /* Biar nggak dobel */
+        background-size: cover; /* Menyesuaikan ukuran layar */
+        background-position: center; /* Posisikan di tengah */
+        background-attachment: fixed; /* Biar tetap saat scroll */
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: #2c3e50;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+      }
+
+      .category-nav {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .category-btn {
+        padding: 12px 24px;
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+      }
+
+      .category-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+      }
+
+      .category-btn.active {
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+      }
+
+      .question-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+
+      .question-container.active {
+        display: block;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .section-title {
+        color: #2c3e50;
+        font-size: 2rem;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .section-subtitle {
+        color: #7f8c8d;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+      }
+
+      .question-type-nav {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .type-btn {
+        padding: 10px 20px;
+        background: #ecf0f1;
+        color: #2c3e50;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .type-btn.active {
+        background: linear-gradient(45deg, #9b59b6, #8e44ad);
+        color: white;
+      }
+
+      .questions-section {
+        display: none;
+      }
+
+      .questions-section.active {
+        display: block;
+      }
+
+      .question-card {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-left: 5px solid #3498db;
+        display: none;
+      }
+
+      .question-card.active {
+        display: block;
+      }
+
+      .question-number {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 15px;
+      }
+
+      .question-text {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        color: #2c3e50;
+        font-weight: 500;
+      }
+
+      .answer-input {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e1e8ed;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+        resize: vertical;
+        min-height: 80px;
+        margin-bottom: 15px;
+      }
+
+      .answer-input:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+
+      .answer-options {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .option {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: white;
+        border: 2px solid #e1e8ed;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .option:hover {
+        border-color: #3498db;
+        background: #f8f9fa;
+      }
+
+      .option input[type="radio"] {
+        margin-right: 12px;
+        scale: 1.2;
+      }
+
+      .option.selected {
+        border-color: #3498db;
+        background: rgba(52, 152, 219, 0.1);
+      }
+
+      .navigation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+
+      .nav-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .prev-btn {
+        background: #95a5a6;
+        color: white;
+      }
+
+      .next-btn {
+        background: linear-gradient(45deg, #27ae60, #229954);
+        color: white;
+      }
+
+      .nav-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .submit-section {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .submit-btn {
+        padding: 15px 40px;
+        background: linear-gradient(45deg, #e74c3c, #c0392b);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3);
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+      }
+
+      .result-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        margin-top: 30px;
+        display: none;
+      }
+
+      .result-container.show {
+        display: block;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      .score-display {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #27ae60;
+        margin-bottom: 10px;
+      }
+
+      .progress-indicator {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .progress-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #bdc3c7;
+        transition: all 0.3s ease;
+      }
+
+      .progress-dot.active {
+        background: #3498db;
+        transform: scale(1.2);
+      }
+
+      .progress-dot.completed {
+        background: #27ae60;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .category-nav {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .category-btn {
+          width: 100%;
+          max-width: 300px;
+        }
+
+        .question-container {
+          padding: 20px;
+        }
+
+        .navigation-buttons {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .nav-btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Seleksi Siswa Lomba SMK</h1>
+        <img src="image/logo.png" style="width: 200px; height: 200px ; object-fit: contain; margin-bottom: 10px;" alt="" srcset="">
+        <div class="category-nav">
+          <button class="category-btn active" data-category="web-development">
+            Web Development
+          </button>
+          <button class="category-btn" data-category="it-software">
+            IT Software Solution
+          </button>
+          <button class="category-btn" data-category="artificial-intelligence">
+            Artificial Intelligence
+          </button>
+          <button class="category-btn" data-category="cyber-security">
+            Cyber Security
+          </button>
         </div>
-    </div>
+      </header>
 
-    <!-- Confirmation Modal -->
-    <div id="confirmModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 max-w-sm w-full">
-            <h3 class="text-lg font-medium mb-4">Konfirmasi Keluar</h3>
-            <p class="mb-6">Anda yakin ingin keluar dari quiz ini?</p>
-            <div class="flex justify-end space-x-3">
-                <button id="cancelExitBtn" class="px-4 py-2 rounded text-gray-700 hover:bg-gray-100">Batal</button>
-                <button id="confirmExitBtn" class="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600">Keluar</button>
+      <main id="content">
+        <!-- Web Development -->
+        <div id="web-development" class="question-container active">
+          <h2 class="section-title">Web Development</h2>
+          <p class="section-subtitle">
+            Tes kemampuan dan pemahaman Web Development
+          </p>
+
+          <div class="question-type-nav">
+            <button class="type-btn active" data-type="interview">
+              Wawancara
+            </button>
+            <button class="type-btn" data-type="logic">Logika</button>
+          </div>
+
+          <div class="progress-indicator">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+          </div>
+
+          <!-- Interview Questions -->
+          <div
+            class="questions-section interview-section active"
+            data-type="interview"
+          >
+            <div class="question-card active" data-question="1">
+              <div class="question-number">Pertanyaan 1/10</div>
+              <div class="question-text">
+                Apa yang dimaksud dengan <em>website</em> dan komponen utamanya?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="1"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
             </div>
-        </div>
-    </div>
 
-    <!-- Question Container -->
-    <div id="quizContainer" class="hidden relative">
-        <button id="exitBtn" class="absolute -right-4 -top-4 z-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:shadow-xl transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-        <div id="questionContainer" class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 max-w-md w-full mx-auto relative">
-        <!-- Completion Screen (hidden by default) -->
-        <div id="completionScreen" class="hidden text-center py-8">
-            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
-                <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
+            <div class="question-card" data-question="2">
+              <div class="question-number">Pertanyaan 2/10</div>
+              <div class="question-text">
+                Bedanya <em>website</em> statis dan dinamis itu apa? Contohnya?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="2"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
             </div>
-            <h2 class="text-xl font-semibold mb-2 text-gray-800">SELESAI!</h2>
-            <p class="text-gray-600 mb-6">Anda telah menyelesaikan semua pertanyaan</p>
-            <button id="backToStartBtn" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors w-full">
-                Kembali ke Menu Awal
+
+            <div class="question-card" data-question="3">
+              <div class="question-number">Pertanyaan 3/10</div>
+              <div class="question-text">
+                Fungsi elemen <code>&lt;head&gt;</code> di HTML buat apa sih?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="3"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="4">
+              <div class="question-number">Pertanyaan 4/10</div>
+              <div class="question-text">Apa itu CDN dan kenapa penting?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="4"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="5">
+              <div class="question-number">Pertanyaan 5/10</div>
+              <div class="question-text">
+                Hosting dan domain itu bedanya apa?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="5"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="6">
+              <div class="question-number">Pertanyaan 6/10</div>
+              <div class="question-text">
+                Kenapa lebih enak pakai CSS eksternal daripada <em>inline</em>?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="6"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="7">
+              <div class="question-number">Pertanyaan 7/10</div>
+              <div class="question-text">
+                Pernah dengar API? Jelasin singkat.
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="7"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="8">
+              <div class="question-number">Pertanyaan 8/10</div>
+              <div class="question-text">DOM di JavaScript itu apaan?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="8"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="9">
+              <div class="question-number">Pertanyaan 9/10</div>
+              <div class="question-text">
+                Kelebihan framework kayak React/Vue?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="9"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="10">
+              <div class="question-number">Pertanyaan 10/10</div>
+              <div class="question-text">
+                Kalau bikin web toko online sederhana, fitur wajibnya apa aja?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="web-development"
+                data-type="interview"
+                data-question="10"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Logic Questions -->
+          <div class="questions-section logic-section" data-type="logic">
+            <div class="question-card active" data-question="1">
+              <div class="question-number">Soal Logika 1/10</div>
+              <div class="question-text">
+                Galeri 4 kolom, foto ada 13. Berapa baris?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-1"
+                    value="3"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>3 baris</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-1"
+                    value="4"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>4 baris</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-1"
+                    value="5"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>5 baris</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="2">
+              <div class="question-number">Soal Logika 2/10</div>
+              <div class="question-text">
+                Tombol HTML nggak berfungsi, kira-kira kenapa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-2"
+                    value="js-error"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>JavaScript belum terhubung atau ada error</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-2"
+                    value="css-error"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>CSS yang salah</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-2"
+                    value="html-error"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>HTML yang tidak valid</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="3">
+              <div class="question-number">Soal Logika 3/10</div>
+              <div class="question-text">
+                Menu tetap di atas saat scroll, CSS-nya apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-3"
+                    value="fixed"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>position: fixed; top: 0;</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-3"
+                    value="absolute"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>position: absolute; top: 0;</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-3"
+                    value="sticky"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>position: sticky; top: 0;</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="4">
+              <div class="question-number">Soal Logika 4/10</div>
+              <div class="question-text">
+                Urutan loading HTML–CSS–JS gimana?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-4"
+                    value="html-css-js"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>HTML → CSS → JS</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-4"
+                    value="css-html-js"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>CSS → HTML → JS</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-4"
+                    value="js-html-css"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>JS → HTML → CSS</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="5">
+              <div class="question-number">Soal Logika 5/10</div>
+              <div class="question-text">Logika validasi form registrasi?</div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-5"
+                    value="validation"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span
+                    >Cek input, format email, panjang password, pesan error jika
+                    salah</span
+                  >
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-5"
+                    value="no-validation"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Langsung kirim data tanpa validasi</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-5"
+                    value="server-only"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Validasi hanya di server</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="6">
+              <div class="question-number">Soal Logika 6/10</div>
+              <div class="question-text">
+                Website lemot, kemungkinan teknisnya?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-6"
+                    value="optimization"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>File besar, server lemot, tidak pakai optimasi</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-6"
+                    value="internet"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Koneksi internet lambat saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-6"
+                    value="device"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Perangkat user yang bermasalah</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="7">
+              <div class="question-number">Soal Logika 7/10</div>
+              <div class="question-text">
+                Fitur "tampilkan lebih banyak" enaknya pakai apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-7"
+                    value="lazy-loading"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Lazy loading atau AJAX request</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-7"
+                    value="reload"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Reload halaman setiap kali</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-7"
+                    value="show-all"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Tampilkan semua data sekaligus</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="8">
+              <div class="question-number">Soal Logika 8/10</div>
+              <div class="question-text">
+                Layout tetap rapi di HP pakai apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-8"
+                    value="responsive"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Responsive design + media query</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-8"
+                    value="fixed-width"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Fixed width layout</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-8"
+                    value="mobile-app"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Buat aplikasi mobile terpisah</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="9">
+              <div class="question-number">Soal Logika 9/10</div>
+              <div class="question-text">
+                Dua elemen absolute tanpa top/left, apa yang terjadi?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-9"
+                    value="overlap"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Numpuk di posisi default dari ancestor</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-9"
+                    value="separate"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Terpisah secara otomatis</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-9"
+                    value="error"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Menyebabkan error</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="10">
+              <div class="question-number">Soal Logika 10/10</div>
+              <div class="question-text">
+                Warna latar sesuai jam, logika sederhananya?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-10"
+                    value="date-if"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Ambil jam dengan Date(), pakai if untuk set warna</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-10"
+                    value="random"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Set warna secara random</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="web-logic-10"
+                    value="css-only"
+                    data-category="web-development"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Pakai CSS animation saja</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="navigation-buttons">
+            <button class="nav-btn prev-btn" onclick="previousQuestion()">
+              ← Sebelumnya
             </button>
+            <button class="nav-btn next-btn" onclick="nextQuestion()">
+              Selanjutnya →
+            </button>
+          </div>
         </div>
-        <button id="exitBtn" class="absolute -right-2 -top-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+
+        <!-- IT Software Solution -->
+        <div id="it-software" class="question-container">
+          <h2 class="section-title">IT Software Solution for Business</h2>
+          <p class="section-subtitle">
+            Tes kemampuan dan pemahaman IT Software Solution
+          </p>
+
+          <div class="question-type-nav">
+            <button class="type-btn active" data-type="interview">
+              Wawancara
+            </button>
+            <button class="type-btn" data-type="logic">Logika</button>
+          </div>
+
+          <div class="progress-indicator">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+          </div>
+
+          <!-- Interview Questions -->
+          <div
+            class="questions-section interview-section active"
+            data-type="interview"
+          >
+            <div class="question-card active" data-question="1">
+              <div class="question-number">Pertanyaan 1/10</div>
+              <div class="question-text">
+                Pernah bikin aplikasi untuk bisnis? Ceritain konsepnya.
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="1"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="2">
+              <div class="question-number">Pertanyaan 2/10</div>
+              <div class="question-text">
+                Aplikasi apa yang menurut kamu wajib buat bisnis sehari-hari?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="2"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="3">
+              <div class="question-number">Pertanyaan 3/10</div>
+              <div class="question-text">
+                Database itu apa dan kenapa penting?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="3"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="4">
+              <div class="question-number">Pertanyaan 4/10</div>
+              <div class="question-text">Apa itu CRUD? Kasih contoh.</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="4"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="5">
+              <div class="question-number">Pertanyaan 5/10</div>
+              <div class="question-text">
+                Ciri-ciri <em>user interface</em> yang baik?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="5"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="6">
+              <div class="question-number">Pertanyaan 6/10</div>
+              <div class="question-text">Kenapa aplikasi butuh login?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="6"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="7">
+              <div class="question-number">Pertanyaan 7/10</div>
+              <div class="question-text">
+                Gimana cara tahu kebutuhan user sebelum bikin aplikasi?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="7"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="8">
+              <div class="question-number">Pertanyaan 8/10</div>
+              <div class="question-text">
+                Apa itu relasi antar tabel di database?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="8"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="9">
+              <div class="question-number">Pertanyaan 9/10</div>
+              <div class="question-text">Kenapa backup data itu penting?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="9"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="10">
+              <div class="question-number">Pertanyaan 10/10</div>
+              <div class="question-text">
+                User lupa password, fitur apa yang harus ada?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="it-software"
+                data-type="interview"
+                data-question="10"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Logic Questions -->
+          <div class="questions-section logic-section" data-type="logic">
+            <div class="question-card active" data-question="1">
+              <div class="question-number">Soal Logika 1/10</div>
+              <div class="question-text">
+                Belanja Rp100.000 diskon 10%, total bayar berapa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-1"
+                    value="90000"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>Rp 90.000</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-1"
+                    value="95000"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>Rp 95.000</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-1"
+                    value="100000"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>Rp 100.000</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="2">
+              <div class="question-number">Soal Logika 2/10</div>
+              <div class="question-text">
+                Barang terjual, logika ngurangin stok gimana?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-2"
+                    value="subtract"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>stok = stok - jumlah_terjual</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-2"
+                    value="add"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>stok = stok + jumlah_terjual</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-2"
+                    value="reset"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>stok = 0</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="3">
+              <div class="question-number">Soal Logika 3/10</div>
+              <div class="question-text">
+                Tabel pelanggan & pesanan, cara hubunginnya?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-3"
+                    value="foreign-key"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>Foreign key ID pelanggan di tabel pesanan</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-3"
+                    value="duplicate"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>Duplikasi semua data pelanggan di tabel pesanan</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-3"
+                    value="separate"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>Pisahkan total tanpa relasi</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="4">
+              <div class="question-number">Soal Logika 4/10</div>
+              <div class="question-text">
+                Data ganda di tabel, cara hindarinya?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-4"
+                    value="unique-key"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Gunakan unique key, validasi input</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-4"
+                    value="ignore"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Biarkan saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-4"
+                    value="delete-all"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Hapus semua data</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="5">
+              <div class="question-number">Soal Logika 5/10</div>
+              <div class="question-text">
+                Pelanggan A beli 2 barang, B beli 5 barang. Siapa terbanyak?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-5"
+                    value="a"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Pelanggan A</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-5"
+                    value="b"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Pelanggan B</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-5"
+                    value="same"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Sama banyak</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="6">
+              <div class="question-number">Soal Logika 6/10</div>
+              <div class="question-text">
+                Bikin aplikasi laundry, fitur prioritasnya?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-6"
+                    value="core-features"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span
+                    >Input pesanan, status cucian, notifikasi selesai,
+                    pembayaran</span
+                  >
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-6"
+                    value="advanced-features"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Chat, game, sosial media</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-6"
+                    value="design-only"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Fokus desain yang bagus saja</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="7">
+              <div class="question-number">Soal Logika 7/10</div>
+              <div class="question-text">
+                100 data ditampilkan per 10 per halaman, caranya?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-7"
+                    value="pagination"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Pagination</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-7"
+                    value="show-all"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Tampilkan semua sekaligus</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-7"
+                    value="random"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Tampilkan random 10 data</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="8">
+              <div class="question-number">Soal Logika 8/10</div>
+              <div class="question-text">
+                Hapus data tanpa konfirmasi, risiko apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-8"
+                    value="accidental-delete"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Data terhapus permanen tanpa sengaja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-8"
+                    value="no-risk"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Tidak ada risiko</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-8"
+                    value="faster"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Lebih cepat dan efisien</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="9">
+              <div class="question-number">Soal Logika 9/10</div>
+              <div class="question-text">
+                Laporan bulanan, data yang dibutuhkan apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-9"
+                    value="complete-data"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Penjualan, pelanggan, stok, pengeluaran</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-9"
+                    value="sales-only"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Data penjualan saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-9"
+                    value="random-data"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Data acak yang tersedia</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="10">
+              <div class="question-number">Soal Logika 10/10</div>
+              <div class="question-text">
+                Database tanpa validasi input, risiko apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-10"
+                    value="security-risk"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span
+                    >Data tidak konsisten, error, potensi SQL Injection</span
+                  >
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-10"
+                    value="faster"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Proses lebih cepat</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="it-logic-10"
+                    value="no-problem"
+                    data-category="it-software"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Tidak ada masalah</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="navigation-buttons">
+            <button class="nav-btn prev-btn" onclick="previousQuestion()">
+              ← Sebelumnya
+            </button>
+            <button class="nav-btn next-btn" onclick="nextQuestion()">
+              Selanjutnya →
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Category -->
+        <div id="artificial-intelligence" class="question-container">
+          <h2 class="section-title">Artificial Intelligence</h2>
+          <p class="section-subtitle">
+            Tes kemampuan dan pemahaman Artificial Intelligence
+          </p>
+
+          <div class="question-type-nav">
+            <button class="type-btn active" data-type="interview">
+              Wawancara
+            </button>
+            <button class="type-btn" data-type="logic">Logika</button>
+          </div>
+
+          <div class="progress-indicator">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+          </div>
+
+          <!-- Interview Questions -->
+          <div
+            class="questions-section interview-section active"
+            data-type="interview"
+          >
+            <div class="question-card active" data-question="1">
+              <div class="question-number">Pertanyaan 1/10</div>
+              <div class="question-text">AI itu apa menurut kamu?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="1"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="2">
+              <div class="question-number">Pertanyaan 2/10</div>
+              <div class="question-text">
+                Contoh aplikasi AI di kehidupan sehari-hari?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="2"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="3">
+              <div class="question-number">Pertanyaan 3/10</div>
+              <div class="question-text">Bedanya AI sama robot apa?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="3"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="4">
+              <div class="question-number">Pertanyaan 4/10</div>
+              <div class="question-text">
+                Data yang bagus untuk AI seperti apa?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="4"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="5">
+              <div class="question-number">Pertanyaan 5/10</div>
+              <div class="question-text">
+                Training & testing di AI itu maksudnya apa?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="5"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="6">
+              <div class="question-number">Pertanyaan 6/10</div>
+              <div class="question-text">Manfaat AI buat bisnis?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="6"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="7">
+              <div class="question-number">Pertanyaan 7/10</div>
+              <div class="question-text">
+                Kalau AI salah prediksi, apa yang kamu lakukan?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="7"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="8">
+              <div class="question-number">Pertanyaan 8/10</div>
+              <div class="question-text">Apa itu klasifikasi dan regresi?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="8"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="9">
+              <div class="question-number">Pertanyaan 9/10</div>
+              <div class="question-text">Dataset itu apa?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="9"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="10">
+              <div class="question-number">Pertanyaan 10/10</div>
+              <div class="question-text">
+                Kalau data latih sedikit, apa yang terjadi?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="artificial-intelligence"
+                data-type="interview"
+                data-question="10"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Logic Questions -->
+          <div class="questions-section logic-section" data-type="logic">
+            <div class="question-card active" data-question="1">
+              <div class="question-number">Soal Logika 1/10</div>
+              <div class="question-text">
+                AI mengenali suara, data apa yang dibutuhkan?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-1"
+                    value="audio-data"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>Rekaman suara, teks transkrip, label</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-1"
+                    value="text-only"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>Teks saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-1"
+                    value="image-data"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>Gambar gelombang suara</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="2">
+              <div class="question-number">Soal Logika 2/10</div>
+              <div class="question-text">
+                Input: suhu = 40°C, prediksi = "panas". Ini klasifikasi atau
+                regresi?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-2"
+                    value="classification"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>Klasifikasi</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-2"
+                    value="regression"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>Regresi</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-2"
+                    value="both"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>Keduanya</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="3">
+              <div class="question-number">Soal Logika 3/10</div>
+              <div class="question-text">
+                Data tinggi & berat, logika prediksi gemuk/kurus?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-3"
+                    value="bmi"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span
+                    >Gunakan BMI = berat/(tinggi²) lalu tentukan kategori</span
+                  >
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-3"
+                    value="height-only"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>Lihat tinggi saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-3"
+                    value="weight-only"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>Lihat berat saja</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="4">
+              <div class="question-number">Soal Logika 4/10</div>
+              <div class="question-text">
+                AI prediksi cuaca dari data kemarin, akurat nggak?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-4"
+                    value="not-always"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Tidak selalu, karena faktor cuaca berubah cepat</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-4"
+                    value="always-accurate"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Selalu akurat</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-4"
+                    value="never-accurate"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Tidak pernah akurat</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="5">
+              <div class="question-number">Soal Logika 5/10</div>
+              <div class="question-text">
+                5 gambar kucing & 5 anjing, bisa bedain?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-5"
+                    value="difficult"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Sulit, data terlalu sedikit</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-5"
+                    value="easy"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Mudah, cukup untuk training</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-5"
+                    value="perfect"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Perfect, data yang ideal</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="6">
+              <div class="question-number">Soal Logika 6/10</div>
+              <div class="question-text">
+                AI salah terus, yang diperbaiki apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-6"
+                    value="fix-all"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Data, algoritma, parameter</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-6"
+                    value="data-only"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Data saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-6"
+                    value="give-up"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Ganti dengan AI lain</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="7">
+              <div class="question-number">Soal Logika 7/10</div>
+              <div class="question-text">
+                AI baca tulisan tangan, langkah awal apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-7"
+                    value="collect-data"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Kumpulkan dataset gambar tulisan tangan</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-7"
+                    value="buy-scanner"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Beli scanner yang bagus</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-7"
+                    value="study-handwriting"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Belajar ilmu tulisan tangan</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="8">
+              <div class="question-number">Soal Logika 8/10</div>
+              <div class="question-text">
+                Cara menilai prediksi AI benar atau salah?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-8"
+                    value="compare-label"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Bandingkan hasil prediksi dengan label sebenarnya</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-8"
+                    value="guess"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Tebak-tebakan saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-8"
+                    value="ask-expert"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Tanya ahli AI</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="9">
+              <div class="question-number">Soal Logika 9/10</div>
+              <div class="question-text">
+                Kenapa 80% data training, 20% testing?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-9"
+                    value="learn-test"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span
+                    >Supaya model belajar dari sebagian besar data dan diuji di
+                    data baru</span
+                  >
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-9"
+                    value="tradition"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Karena sudah tradisi</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-9"
+                    value="random"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Angka acak yang bagus</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="10">
+              <div class="question-number">Soal Logika 10/10</div>
+              <div class="question-text">Overfitting itu apa?</div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-10"
+                    value="memorize"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span
+                    >Model terlalu hafal data latih, gagal generalisasi</span
+                  >
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-10"
+                    value="too-big"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Model terlalu besar ukurannya</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="ai-logic-10"
+                    value="too-fast"
+                    data-category="artificial-intelligence"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Model belajar terlalu cepat</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="navigation-buttons">
+            <button class="nav-btn prev-btn" onclick="previousQuestion()">
+              ← Sebelumnya
+            </button>
+            <button class="nav-btn next-btn" onclick="nextQuestion()">
+              Selanjutnya →
+            </button>
+          </div>
+        </div>
+
+        <!-- Cyber Security -->
+        <div id="cyber-security" class="question-container">
+          <h2 class="section-title">Cyber Security</h2>
+          <p class="section-subtitle">
+            Tes kemampuan dan pemahaman Cyber Security
+          </p>
+
+          <div class="question-type-nav">
+            <button class="type-btn active" data-type="interview">
+              Wawancara
+            </button>
+            <button class="type-btn" data-type="logic">Logika</button>
+          </div>
+
+          <div class="progress-indicator">
+            <div class="progress-dot active"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+          </div>
+
+          <!-- Interview Questions -->
+          <div
+            class="questions-section interview-section active"
+            data-type="interview"
+          >
+            <div class="question-card active" data-question="1">
+              <div class="question-number">Pertanyaan 1/10</div>
+              <div class="question-text">Keamanan data itu maksudnya apa?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="1"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="2">
+              <div class="question-number">Pertanyaan 2/10</div>
+              <div class="question-text">
+                Pernah dengar serangan hacker? Contoh?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="2"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="3">
+              <div class="question-number">Pertanyaan 3/10</div>
+              <div class="question-text">
+                Ciri password yang kuat itu gimana?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="3"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="4">
+              <div class="question-number">Pertanyaan 4/10</div>
+              <div class="question-text">Enkripsi itu apa?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="4"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="5">
+              <div class="question-number">Pertanyaan 5/10</div>
+              <div class="question-text">Malware itu apa?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="5"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="6">
+              <div class="question-number">Pertanyaan 6/10</div>
+              <div class="question-text">Firewall itu buat apa?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="6"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="7">
+              <div class="question-number">Pertanyaan 7/10</div>
+              <div class="question-text">SQL Injection itu apa bahayanya?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="7"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="8">
+              <div class="question-number">Pertanyaan 8/10</div>
+              <div class="question-text">
+                Kenapa akun perlu verifikasi 2 langkah?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="8"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="9">
+              <div class="question-number">Pertanyaan 9/10</div>
+              <div class="question-text">Phishing itu apa?</div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="9"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+
+            <div class="question-card" data-question="10">
+              <div class="question-number">Pertanyaan 10/10</div>
+              <div class="question-text">
+                Kalau bikin sistem login, biar aman harus gimana?
+              </div>
+              <textarea
+                class="answer-input"
+                placeholder="Tuliskan jawaban Anda di sini..."
+                data-category="cyber-security"
+                data-type="interview"
+                data-question="10"
+              ></textarea>
+              <textarea
+                class="answer-input"
+                placeholder="Catatan penilai..."
+                readonly
+                style="background: #f8f9fa"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Logic Questions -->
+          <div class="questions-section logic-section" data-type="logic">
+            <div class="question-card active" data-question="1">
+              <div class="question-number">Soal Logika 1/10</div>
+              <div class="question-text">
+                Password <code>abc</code> digeser +1 huruf jadi apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-1"
+                    value="bcd"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>bcd</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-1"
+                    value="def"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>def</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-1"
+                    value="abc"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="1"
+                  />
+                  <span>abc</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="2">
+              <div class="question-number">Soal Logika 2/10</div>
+              <div class="question-text">
+                Pakai WiFi gratis di cafe, aman nggak?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-2"
+                    value="not-safe"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>Tidak, rawan penyadapan</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-2"
+                    value="safe"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>Aman, tidak ada masalah</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-2"
+                    value="depends"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="2"
+                  />
+                  <span>Tergantung password WiFi</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="3">
+              <div class="question-number">Soal Logika 3/10</div>
+              <div class="question-text">
+                Website diserang bot login, solusinya apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-3"
+                    value="captcha"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>CAPTCHA, batasi percobaan login</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-3"
+                    value="ignore"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>Biarkan saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-3"
+                    value="shutdown"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="3"
+                  />
+                  <span>Matikan website</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="4">
+              <div class="question-number">Soal Logika 4/10</div>
+              <div class="question-text">
+                Password <code>123456</code> aman nggak?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-4"
+                    value="not-safe"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Tidak, mudah ditebak</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-4"
+                    value="safe"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Aman karena sederhana</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-4"
+                    value="very-safe"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="4"
+                  />
+                  <span>Sangat aman</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="5">
+              <div class="question-number">Soal Logika 5/10</div>
+              <div class="question-text">
+                Aturan password aman, minimal 3 syarat?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-5"
+                    value="complex"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span
+                    >Minimal 8 karakter, kombinasi huruf/angka/simbol, tidak
+                    pakai kata umum</span
+                  >
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-5"
+                    value="simple"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Pendek, mudah diingat, pakai nama</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-5"
+                    value="numbers-only"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="5"
+                  />
+                  <span>Pakai angka saja</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="6">
+              <div class="question-number">Soal Logika 6/10</div>
+              <div class="question-text">
+                Data penting di komputer, cara amannya?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-6"
+                    value="encrypt-backup"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Enkripsi + backup offline</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-6"
+                    value="hide-folder"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Sembunyikan folder saja</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-6"
+                    value="no-protection"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="6"
+                  />
+                  <span>Biarkan seperti biasa</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="7">
+              <div class="question-number">Soal Logika 7/10</div>
+              <div class="question-text">
+                Email palsu minta klik link hadiah, namanya apa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-7"
+                    value="phishing"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Phishing</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-7"
+                    value="spam"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Spam</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-7"
+                    value="virus"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="7"
+                  />
+                  <span>Virus</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="8">
+              <div class="question-number">Soal Logika 8/10</div>
+              <div class="question-text">Login tanpa logout, risiko apa?</div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-8"
+                    value="account-access"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Akun diakses orang lain</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-8"
+                    value="no-risk"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Tidak ada risiko</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-8"
+                    value="faster-access"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="8"
+                  />
+                  <span>Akses lebih cepat</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="9">
+              <div class="question-number">Soal Logika 9/10</div>
+              <div class="question-text">
+                Fitur upload file, apa yang perlu diperhatikan biar aman?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-9"
+                    value="validate-scan"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Validasi tipe file, batasi ukuran, scan virus</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-9"
+                    value="accept-all"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Terima semua jenis file</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-9"
+                    value="big-size-only"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="9"
+                  />
+                  <span>Hanya file berukuran besar</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="question-card" data-question="10">
+              <div class="question-number">Soal Logika 10/10</div>
+              <div class="question-text">
+                Kirim data rahasia, pilih chat atau email? Kenapa?
+              </div>
+              <div class="answer-options">
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-10"
+                    value="encrypted-email"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Email terenkripsi lebih aman</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-10"
+                    value="chat"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Chat karena lebih cepat</span>
+                </label>
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="cyber-logic-10"
+                    value="both-same"
+                    data-category="cyber-security"
+                    data-type="logic"
+                    data-question="10"
+                  />
+                  <span>Sama saja, tidak ada bedanya</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="navigation-buttons">
+            <button class="nav-btn prev-btn" onclick="previousQuestion()">
+              ← Sebelumnya
+            </button>
+            <button class="nav-btn next-btn" onclick="nextQuestion()">
+              Selanjutnya →
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <div class="submit-section">
+        <button class="submit-btn" onclick="submitAnswers()">
+          🎯 Submit Semua Jawaban
         </button>
-        <div class="mb-4">
-            <h2 id="questionTitle" class="text-xl font-bold"></h2>
-            <p id="questionText" class="mt-2"></p>
-        </div>
-        <div id="timerContainer" class="mb-6 p-2 bg-gray-50 rounded-lg text-right">
-            <span id="timer" class="bg-red-500 text-white px-3 py-1 rounded">03:00</span>
-        </div>
-        <div class="text-center">
-            <button id="nextBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:shadow-md transition-all disabled:opacity-70" disabled>Next</button>
-        </div>
+      </div>
+
+      <div class="result-container" id="resultContainer">
+        <h2>Hasil Tes</h2>
+        <div class="score-display" id="scoreDisplay">0/40</div>
+        <p>Skor dari pertanyaan logika</p>
+        <div id="detailResults"></div>
+      </div>
     </div>
 
     <script>
-        // Questions data
-        const questions = {
-            webDevelopment: {
-                wawancara: [
-                    "1. Jelaskan menurutmu, apa itu website?",
-                    "2. Apa perbedaan antara website statis dan dinamis?",
-                    "3. Apa fungsi dari tag <head> dalam HTML?",
-                    "4. Apa yang kamu tahu tentang CDN?",
-                    "5. Apa itu hosting dan domain?",
-                    "6. Menurutmu, kenapa penting menggunakan CSS eksternal?",
-                    "7. Pernah dengar tentang API? Bisa jelaskan singkat?",
-                    "8. Apa itu DOM dalam JavaScript?",
-                    "9. Apa kelebihan menggunakan framework seperti React atau Vue?",
-                    "10. Jika kamu diminta buat web toko online sederhana, apa fitur dasarnya?"
-                ],
-                logika: [
-                    "1. Kamu ingin membuat galeri foto dengan 4 kolom per baris. Jika ada 13 foto, berapa baris yang dibutuhkan?",
-                    "2. Kamu punya tombol HTML, tapi tidak berfungsi saat diklik. Sebutkan kemungkinan masalahnya.",
-                    "3. Jika kamu ingin membuat menu navigasi tetap di atas saat scroll, properti CSS apa yang kamu pakai?",
-                    "4. Jelaskan urutan loading halaman: HTML – CSS – JS, menurut logikamu.",
-                    "5. Apa logika utama saat membuat form registrasi dengan validasi?",
-                    "6. Sebuah website lambat dibuka. Sebutkan 3 kemungkinan penyebab teknisnya.",
-                    "7. Jika kamu mau membuat fitur 'tampilkan lebih banyak', seperti di blog, pakai pendekatan seperti apa?",
-                    "8. Kamu ingin layout tetap rapi di layar HP. Apa pendekatan CSS yang kamu gunakan?",
-                    "9. Apa yang terjadi jika dua elemen diatur `position: absolute` tanpa `top` dan `left` yang jelas?",
-                    "10. Kamu diminta ubah warna latar halaman sesuai jam (pagi/siang/malam). Gimana logika sederhananya?"
-                ]
-            },
-            itSolution: {
-                wawancara: [
-                    "1. Pernah buat aplikasi bisnis? Ceritakan.",
-                    "2. Menurut kamu, apa aplikasi yang membantu bisnis sehari-hari?",
-                    "3. Apa itu database dan kenapa penting?",
-                    "4. Jelaskan apa itu CRUD dengan contoh.",
-                    "5. Apa itu 'user interface' yang baik?",
-                    "6. Kenapa aplikasi butuh login?",
-                    "7. Bagaimana kamu tahu kebutuhan user sebelum buat aplikasi?",
-                    "8. Apa itu relasi antar-tabel di database?",
-                    "9. Apa pentingnya backup data?",
-                    "10. Jika user lupa password, fitur apa yang harus ada?"
-                ],
-                logika: [
-                    "1. Jika pelanggan belanja Rp100.000 dan dapat diskon 10%, berapa total bayar?",
-                    "2. Jika barang terjual, bagaimana mengurangi stok secara logika?",
-                    "3. Kamu punya tabel pelanggan dan pesanan. Bagaimana cara menghubungkannya?",
-                    "4. Jika ada data ganda di tabel, bagaimana menghindarinya?",
-                    "5. Pelanggan A beli 2 barang, B beli 5 barang. Siapa belanja paling banyak?",
-                    "6. Jika kamu buat aplikasi laundry, fitur apa yang kamu prioritaskan?",
-                    "7. Ada 100 data, bagaimana menampilkannya per 10 di 1 halaman?",
-                    "8. Jika user klik 'hapus data', tapi tidak ada konfirmasi, apa risikonya?",
-                    "9. Kamu diminta buat laporan bulanan. Data apa saja yang dibutuhkan?",
-                    "10. Apa yang terjadi kalau database tidak ada validasi input?"
-                ]
-            },
-            ai: {
-                wawancara: [
-                    "1. Apa itu AI menurutmu?",
-                    "2. Apa contoh aplikasi AI yang kamu pakai sehari-hari?",
-                    "3. Bedanya AI dan robot itu apa?",
-                    "4. AI belajar dari data. Menurutmu, data seperti apa yang bagus?",
-                    "5. Apa itu training dan testing dalam AI?",
-                    "6. Apa manfaat AI dalam dunia bisnis?",
-                    "7. Kalau AI salah prediksi, apa yang kamu lakukan?",
-                    "8. Apa itu klasifikasi dan regresi?",
-                    "9. Jelaskan singkat apa itu dataset.",
-                    "10. Apa yang terjadi kalau AI dilatih dengan data yang sedikit?"
-                ],
-                logika: [
-                    "1. Jika AI mengenali suara, data apa yang dibutuhkan?",
-                    "2. Jika input: 'suhu = 40°C', prediksi: 'panas' — itu klasifikasi atau regresi?",
-                    "3. Ada data tinggi dan berat. Buat logika sederhana untuk prediksi gemuk/kurus.",
-                    "4. AI prediksi cuaca dari data kemarin, apakah selalu akurat?",
-                    "5. AI diberi 5 gambar kucing, 5 gambar anjing. Bisa bedakan?",
-                    "6. Jika hasil AI salah terus, apa yang perlu diperbaiki?",
-                    "7. Kamu ingin AI membaca tulisan tangan, langkah awal apa?",
-                    "8. Bagaimana cara menilai hasil prediksi AI benar atau salah?",
-                    "9. Jika 80% data dipakai training, 20% testing, kenapa begitu?",
-                    "10. Apa maksud dari overfitting?"
-                ]
-            },
-            cyberSecurity: {
-                wawancara: [
-                    "1. Apa itu keamanan data?",
-                    "2. Pernah dengar tentang serangan hacker? Jelaskan.",
-                    "3. Menurut kamu, password yang kuat itu seperti apa?",
-                    "4. Apa itu enkripsi?",
-                    "5. Apa itu malware?",
-                    "6. Apa itu firewall dan fungsinya?",
-                    "7. Pernah dengar SQL Injection? Apa bahayanya?",
-                    "8. Kenapa akun perlu verifikasi 2 langkah?",
-                    "9. Apa itu phising?",
-                    "10. Kalau kamu buat sistem login, bagaimana biar aman?"
-                ],
-                logika: [
-                    "1. Password: `abc` → jika tiap huruf digeser +1, jadi apa?",
-                    "2. Kamu buka WiFi gratis di cafe. Aman nggak? Kenapa?",
-                    "3. Jika website kamu diserang bot login, solusinya apa?",
-                    "4. Jika user menggunakan password: `123456`, apakah aman?",
-                    "5. Buat aturan validasi password aman (minimal 3 syarat).",
-                    "6. Ada data penting di komputer. Cara aman menyimpannya?",
-                    "7. Email palsu minta klik link hadiah. Apa namanya?",
-                    "8. Apa yang terjadi kalau login tanpa logout?",
-                    "9. Jika ada fitur upload file, apa yang harus diperhatikan agar aman?",
-                    "10. Kamu diminta kirim data rahasia. Pilih kirim lewat chat atau email? Kenapa?"
-                ]
-            }
+      // Global variables
+      let currentCategory = "web-development";
+      let currentType = "interview";
+      let currentQuestion = 1;
+      let answers = {};
+
+      // Answer keys for logic questions
+      const answerKeys = {
+        "web-development": {
+          logic: {
+            1: "4",
+            2: "js-error",
+            3: "fixed",
+            4: "html-css-js",
+            5: "validation",
+            6: "optimization",
+            7: "lazy-loading",
+            8: "responsive",
+            9: "overlap",
+            10: "date-if",
+          },
+        },
+        "it-software": {
+          logic: {
+            1: "90000",
+            2: "subtract",
+            3: "foreign-key",
+            4: "unique-key",
+            5: "b",
+            6: "core-features",
+            7: "pagination",
+            8: "accidental-delete",
+            9: "complete-data",
+            10: "security-risk",
+          },
+        },
+        "artificial-intelligence": {
+          logic: {
+            1: "audio-data",
+            2: "classification",
+            3: "bmi",
+            4: "not-always",
+            5: "difficult",
+            6: "fix-all",
+            7: "collect-data",
+            8: "compare-label",
+            9: "learn-test",
+            10: "memorize",
+          },
+        },
+        "cyber-security": {
+          logic: {
+            1: "bcd",
+            2: "not-safe",
+            3: "captcha",
+            4: "not-safe",
+            5: "complex",
+            6: "encrypt-backup",
+            7: "phishing",
+            8: "account-access",
+            9: "validate-scan",
+            10: "encrypted-email",
+          },
+        },
+      };
+
+      // Initialize the application
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeApp();
+        loadAnswers();
+        updateProgress();
+      });
+
+      function initializeApp() {
+        // Category navigation
+        document.querySelectorAll(".category-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            switchCategory(this.dataset.category);
+          });
+        });
+
+        // Question type navigation
+        document.querySelectorAll(".type-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const container = this.closest(".question-container");
+            const category = container.id;
+            switchQuestionType(category, this.dataset.type);
+          });
+        });
+
+        // Answer inputs
+        document.querySelectorAll("input, textarea").forEach((input) => {
+          input.addEventListener("input", saveAnswer);
+          input.addEventListener("change", saveAnswer);
+        });
+
+        // Radio button selection styling
+        document.querySelectorAll('input[type="radio"]').forEach((radio) => {
+          radio.addEventListener("change", function () {
+            // Remove selected class from all options in this question
+            const questionCard = this.closest(".question-card");
+            questionCard.querySelectorAll(".option").forEach((opt) => {
+              opt.classList.remove("selected");
+            });
+            // Add selected class to chosen option
+            this.closest(".option").classList.add("selected");
+          });
+        });
+      }
+
+      function switchCategory(category) {
+        currentCategory = category;
+        currentQuestion = 1;
+
+        // Update category buttons
+        document.querySelectorAll(".category-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.category === category);
+        });
+
+        // Update containers
+        document
+          .querySelectorAll(".question-container")
+          .forEach((container) => {
+            container.classList.toggle("active", container.id === category);
+          });
+
+        // Reset to interview questions
+        switchQuestionType(category, "interview");
+        updateProgress();
+      }
+
+      function switchQuestionType(category, type) {
+        currentType = type;
+        currentQuestion = 1;
+
+        const container = document.getElementById(category);
+
+        // Update type buttons
+        container.querySelectorAll(".type-btn").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.type === type);
+        });
+
+        // Update sections
+        container.querySelectorAll(".questions-section").forEach((section) => {
+          section.classList.toggle("active", section.dataset.type === type);
+        });
+
+        showQuestion(category, type, 1);
+        updateProgress();
+      }
+
+      function showQuestion(category, type, questionNum) {
+        const container = document.getElementById(category);
+        const section = container.querySelector(
+          `.questions-section[data-type="${type}"]`
+        );
+
+        // Hide all questions
+        section.querySelectorAll(".question-card").forEach((card) => {
+          card.classList.remove("active");
+        });
+
+        // Show current question
+        const currentCard = section.querySelector(
+          `[data-question="${questionNum}"]`
+        );
+        if (currentCard) {
+          currentCard.classList.add("active");
+        }
+
+        updateNavigationButtons();
+      }
+
+      function nextQuestion() {
+        const maxQuestions = 10;
+        if (currentQuestion < maxQuestions) {
+          currentQuestion++;
+          showQuestion(currentCategory, currentType, currentQuestion);
+          updateProgress();
+        }
+      }
+
+      function previousQuestion() {
+        if (currentQuestion > 1) {
+          currentQuestion--;
+          showQuestion(currentCategory, currentType, currentQuestion);
+          updateProgress();
+        }
+      }
+
+      function updateNavigationButtons() {
+        const container = document.getElementById(currentCategory);
+        const prevBtn = container.querySelector(".prev-btn");
+        const nextBtn = container.querySelector(".next-btn");
+
+        prevBtn.disabled = currentQuestion === 1;
+        nextBtn.disabled = currentQuestion === 10;
+      }
+
+      function updateProgress() {
+        const container = document.getElementById(currentCategory);
+        const dots = container.querySelectorAll(".progress-dot");
+
+        dots.forEach((dot, index) => {
+          dot.classList.remove("active", "completed");
+          if (index + 1 === currentQuestion) {
+            dot.classList.add("active");
+          } else if (index + 1 < currentQuestion) {
+            dot.classList.add("completed");
+          }
+        });
+      }
+
+      function saveAnswer() {
+        const category = this.dataset.category;
+        const type = this.dataset.type;
+        const question = this.dataset.question;
+
+        if (!answers[category]) answers[category] = {};
+        if (!answers[category][type]) answers[category][type] = {};
+
+        if (this.type === "radio") {
+          if (this.checked) {
+            answers[category][type][question] = this.value;
+          }
+        } else {
+          answers[category][type][question] = this.value;
+        }
+
+        localStorage.setItem("smk_selection_answers", JSON.stringify(answers));
+      }
+
+      function loadAnswers() {
+        const saved = localStorage.getItem("smk_selection_answers");
+        if (saved) {
+          answers = JSON.parse(saved);
+
+          // Restore answers to form elements
+          Object.keys(answers).forEach((category) => {
+            Object.keys(answers[category]).forEach((type) => {
+              Object.keys(answers[category][type]).forEach((question) => {
+                const value = answers[category][type][question];
+
+                if (type === "logic") {
+                  const radio = document.querySelector(
+                    `input[data-category="${category}"][data-type="${type}"][data-question="${question}"][value="${value}"]`
+                  );
+                  if (radio) {
+                    radio.checked = true;
+                    radio.closest(".option").classList.add("selected");
+                  }
+                } else {
+                  const textarea = document.querySelector(
+                    `textarea[data-category="${category}"][data-type="${type}"][data-question="${question}"]`
+                  );
+                  if (textarea) {
+                    textarea.value = value;
+                  }
+                }
+              });
+            });
+          });
+        }
+      }
+
+      function submitAnswers() {
+        let totalScore = 0;
+        let maxScore = 0;
+        let results = {};
+
+        // Calculate scores for logic questions only
+        Object.keys(answerKeys).forEach((category) => {
+          if (answers[category] && answers[category].logic) {
+            let categoryScore = 0;
+            let categoryMax = 0;
+
+            Object.keys(answerKeys[category].logic).forEach((question) => {
+              categoryMax += getQuestionPoints(category, question);
+              const correctAnswer = answerKeys[category].logic[question];
+              const userAnswer = answers[category].logic[question];
+
+              if (userAnswer === correctAnswer) {
+                const points = getQuestionPoints(category, question);
+                categoryScore += points;
+              }
+            });
+
+            results[category] = {
+              score: categoryScore,
+              max: categoryMax,
+            };
+
+            totalScore += categoryScore;
+            maxScore += categoryMax;
+          }
+        });
+
+        // Calculate percentage score
+        const percentageScore = (totalScore / maxScore) * 100;
+
+        // Display results
+        displayResults(percentageScore, results);
+      }
+
+      function getQuestionPoints(category, question) {
+        // Return points based on question difficulty (you can customize this)
+        const points = {
+          "web-development": {
+            1: 2,
+            2: 3,
+            3: 2,
+            4: 2,
+            5: 3,
+            6: 3,
+            7: 3,
+            8: 3,
+            9: 2,
+            10: 3,
+          },
+          "it-software": {
+            1: 2,
+            2: 3,
+            3: 3,
+            4: 3,
+            5: 1,
+            6: 3,
+            7: 3,
+            8: 3,
+            9: 3,
+            10: 3,
+          },
+          "artificial-intelligence": {
+            1: 3,
+            2: 2,
+            3: 3,
+            4: 3,
+            5: 3,
+            6: 3,
+            7: 3,
+            8: 3,
+            9: 3,
+            10: 3,
+          },
+          "cyber-security": {
+            1: 2,
+            2: 3,
+            3: 3,
+            4: 2,
+            5: 3,
+            6: 3,
+            7: 3,
+            8: 3,
+            9: 3,
+            10: 3,
+          },
         };
 
-        let currentQuestionIndex = 0;
-        let selectedCategory = '';
-        let questionType = 'wawancara';
-        let timer;
-        let timeLeft = 110; // 1 minute 50 seconds for interview
+        return points[category][question] || 1;
+      }
 
-        // Start button event listener
-        // Start button event listener
-        document.getElementById('startBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Start button clicked');
-            document.getElementById('startScreen').classList.add('hidden');
-            document.getElementById('competitionScreen').classList.remove('hidden');
+      function displayResults(percentageScore, results) {
+        const resultContainer = document.getElementById("resultContainer");
+        const scoreDisplay = document.getElementById("scoreDisplay");
+        const detailResults = document.getElementById("detailResults");
+
+        scoreDisplay.textContent = `${Math.round(percentageScore)}/100`;
+
+        let detailHTML =
+          '<div style="margin-top: 20px;"><h3>Detail Hasil per Kategori:</h3>';
+
+        const categoryNames = {
+          "web-development": "Web Development",
+          "it-software": "IT Software Solution",
+          "artificial-intelligence": "Artificial Intelligence",
+          "cyber-security": "Cyber Security",
+        };
+
+        Object.keys(results).forEach((category) => {
+          const result = results[category];
+          const percentage = Math.round((result.score / result.max) * 100);
+          detailHTML += `
+                    <div style="background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 10px; border-left: 4px solid #3498db;">
+                        <strong>${categoryNames[category]}:</strong> ${result.score}/${result.max} (${percentage}%)
+                    </div>
+                `;
         });
 
-        // Competition buttons event listeners
-        document.getElementById('webDevBtn').addEventListener('click', () => {
-            selectedCategory = 'webDevelopment';
-            startQuiz();
-        });
+        detailHTML += "</div>";
+        detailResults.innerHTML = detailHTML;
 
-        document.getElementById('itBtn').addEventListener('click', () => {
-            selectedCategory = 'itSolution';
-            startQuiz();
-        });
-
-        document.getElementById('aiBtn').addEventListener('click', () => {
-            selectedCategory = 'ai';
-            startQuiz();
-        });
-
-        document.getElementById('cyberSecBtn').addEventListener('click', () => {
-            selectedCategory = 'cyberSecurity';
-            startQuiz();
-        });
-
-        // Start quiz function
-        function startQuiz() {
-            document.getElementById('competitionScreen').classList.add('hidden');
-            document.getElementById('quizContainer').classList.remove('hidden');
-            document.querySelector('#quizContainer #questionContainer').classList.remove('hidden');
-            currentQuestionIndex = 0;
-            questionType = 'wawancara'; // Reset to wawancara
-            timeLeft = 180; // Reset time for interview
-            showQuestion();
-        }
-
-        // Back to start button event listener
-        document.getElementById('backToStartBtn').addEventListener('click', () => {
-            document.getElementById('completionScreen').classList.add('hidden');
-            document.getElementById('startScreen').classList.remove('hidden');
-        });
-
-        // Show question function
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        function startTimer() {
-            clearInterval(timer);
-            document.getElementById('timer').textContent = formatTime(timeLeft);
-            document.getElementById('nextBtn').disabled = timeLeft > 60; // Enable if < 1 min left
-            
-            timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer').textContent = formatTime(timeLeft);
-                
-                // Enable next button when < 1 minute remains
-                if (timeLeft <= 60) {
-                    document.getElementById('nextBtn').disabled = false;
-                }
-                
-                // Auto-advance when time expires
-                if (timeLeft <= 0) {
-                    clearInterval(timer);
-                    document.getElementById('nextBtn').click();
-                }
-            }, 1000);
-        }
-
-        function showQuestion() {
-            // Ensure all necessary elements are visible
-            document.querySelector('#quizContainer').classList.remove('hidden');
-            document.querySelector('#questionContainer').classList.remove('hidden');
-            document.querySelector('#timerContainer').classList.remove('hidden');
-            startTimer();
-            const categoryTitles = {
-                webDevelopment: 'Web Development',
-                itSolution: 'IT Solution',
-                ai: 'Artificial Intelligence',
-                cyberSecurity: 'Cyber Security'
-            };
-            
-            document.getElementById('questionTitle').innerText = `${categoryTitles[selectedCategory]} - ${questionType.toUpperCase()}`;
-            document.getElementById('questionText').innerText = questions[selectedCategory][questionType][currentQuestionIndex];
-            
-            // Update next button state
-            const nextBtn = document.getElementById('nextBtn');
-            nextBtn.innerText = currentQuestionIndex === questions[selectedCategory][questionType].length - 1 
-                ? (questionType === 'wawancara' ? 'Lanjut ke Logika' : 'Selesai') 
-                : 'Next';
-
-            // Set timer duration based on question type (1:50 for wawancara, 3:00 for logika)
-            timeLeft = questionType === 'wawancara' ? 110 : 180;
-            document.getElementById('timer').textContent = formatTime(timeLeft);
-            document.getElementById('timer').textContent = formatTime(timeLeft);
-        }
-
-        // Exit button event listener
-        document.getElementById('exitBtn').addEventListener('click', function() {
-            if(confirm('Anda yakin ingin keluar dari quiz ini?')) {
-                document.getElementById('quizContainer').classList.add('hidden');
-                document.getElementById('competitionScreen').classList.remove('hidden');
-            }
-        });
-
-        document.getElementById('cancelExitBtn').addEventListener('click', () => {
-            document.getElementById('confirmModal').classList.add('hidden');
-        });
-
-        document.getElementById('confirmExitBtn').addEventListener('click', () => {
-            document.getElementById('quizContainer').classList.add('hidden');
-            document.getElementById('confirmModal').classList.add('hidden');
-            document.getElementById('competitionScreen').classList.remove('hidden');
-        });
-
-        // Next button event listener
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            if (currentQuestionIndex < questions[selectedCategory][questionType].length - 1) {
-                currentQuestionIndex++;
-                showQuestion();
-            } else if (questionType === 'wawancara') {
-                questionType = 'logika';
-                currentQuestionIndex = 0;
-                if (questions[selectedCategory][questionType].length > 0) {
-                    document.getElementById('questionContainer').classList.add('hidden');
-                document.getElementById('completionScreen').classList.remove('hidden');
-                setTimeout(() => {
-                    showQuestion();
-                }, 3000); // Show next question after 3 seconds
-                } else {
-                    document.getElementById('questionContainer').classList.add('hidden');
-                document.getElementById('completionScreen').classList.remove('hidden');
-                setTimeout(() => {
-                    document.getElementById('competitionScreen').classList.remove('hidden');
-                }, 3000);
-                }
-            } else {
-                document.getElementById('questionText').innerText = 'Selamat! Anda telah menyelesaikan semua pertanyaan';
-                document.getElementById('questionTitle').innerText = 'Quiz Selesai';
-                document.getElementById('timerContainer').classList.add('hidden');
-                document.getElementById('prevBtn').classList.add('hidden');
-                document.getElementById('nextBtn').classList.add('hidden');
-                document.getElementById('completionScreen').classList.remove('hidden');
-            }
-        });
+        resultContainer.classList.add("show");
+        resultContainer.scrollIntoView({ behavior: "smooth" });
+      }
     </script>
-</body>
+  </body>
 </html>
